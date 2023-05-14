@@ -6,9 +6,14 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from './filters/allException.filter';
 import { TransformationInterceptor } from './interceptors/responseTransaform.interceptor';
+import { ConfigModule } from '@nestjs/config'
+import { config } from './modules/config/config';
 
 @Module({
-  imports: [],
+  imports: [ConfigModule.forRoot({
+    isGlobal:true,
+    load:[config]
+  })],
   controllers: [AppController],
   providers: [
     {
