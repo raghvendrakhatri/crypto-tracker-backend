@@ -22,8 +22,10 @@ import {
 
       if(exception instanceof HttpException){
             httpStatus = exception.getStatus();
-            errorMessage = exception.message;
+            // errorMessage = exception['response']['message'] ? exception['response']['message'][0] : exception.message;
+            errorMessage =  typeof exception.getResponse() === 'string' ? exception.getResponse() : exception.getResponse()['message'][0];
       }
+     
       
       const responseBody = {
         statusCode: httpStatus,

@@ -9,26 +9,16 @@ import { TransformationInterceptor } from './interceptors/responseTransaform.int
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { config } from './modules/config/config';
 import { TypeOrmModule,TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { AuthenticationModule } from './modules/authentication/authentication.module';
+import { dataSourceOptions } from '../typeorm.config';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal:true,
     load:[config]
   }),
-  TypeOrmModule.forRootAsync({
-    imports:[ConfigModule],
-    inject:[ConfigService],
-    useFactory:(configService:ConfigService):TypeOrmModuleOptions => ({
-      type:'postgres',
-      host:configService.get<string>('database.host'),
-      port:configService.get<number>('databse.port'),
-      username:configService.get<string>('database.username'),
-      password:configService.get<string>('database.password'),
-      database:configService.get<string>('databse.type'),
-      entities:[__dirname + '/../**/*.entity.{js,ts}'],
-      synchronize:false
-    })
-  })
+  TypeOrmModule.forRoot(dataSourceOptions),
+  AuthenticationModule
 ],
   controllers: [AppController],
   providers: [

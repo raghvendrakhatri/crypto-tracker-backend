@@ -9,5 +9,14 @@ export const config = () => ({
         username: process.env.DATABASE_USERNAME,
         password:process.env.DATABASE_PASSWORD,
         type:process.env.DATABASE_TYPE
+    },
+    bcrypt:{
+        rounds: parseInt(process.env.ROUNDS) || 10
+    },
+    jwt:{
+        accessTokenSecret:process.env.ACCESS_TOKEN_SECRET,
+        refreshTokenSecret:process.env.REFRESH_TOKEN_SECRET,
+        accessTokenExpireTime:process.env.ACCESS_TOKEN_EXPIRE_TIME,
+        refreshTokenExpireTime:process.env.REFRESH_TOKEN_EXPIRE_TIME,
     }
 })
