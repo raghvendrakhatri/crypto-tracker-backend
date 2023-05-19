@@ -95,4 +95,13 @@ export class AuthenticationService {
       'refreshToken':tokens.refreshToken
     }
   }
+
+
+  async refreshToken(payload: any):Promise<Record<string,string>> {
+    const tokens = await this.getTokens(payload.sub,payload.username);
+    return {
+      accessToken : tokens.accessToken,
+      refreshToken: payload.refreshToken,
+    }
+  }
 }

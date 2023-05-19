@@ -35,10 +35,11 @@ export class AuthenticationController {
   }
 
 
-  // @ApiBearerAuth()
+  @ApiBearerAuth()
   @UseGuards(RefreshTokenAuthGuard)
-  @Get()
+  @Post('/refresh')
   async loggedIn(@RefreshToken() refresh:any){
-    return refresh
+    const result = await this.authenticationService.refreshToken(refresh);
+    return result;
   }
 }

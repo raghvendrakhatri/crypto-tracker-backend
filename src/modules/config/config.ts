@@ -18,5 +18,11 @@ export const config = () => ({
         refreshTokenSecret:process.env.REFRESH_TOKEN_SECRET,
         accessTokenExpireTime:process.env.ACCESS_TOKEN_EXPIRE_TIME,
         refreshTokenExpireTime:process.env.REFRESH_TOKEN_EXPIRE_TIME,
+    },
+    aws:{
+        accessKeyId:process.env.AWS_ACCESS_KEY_ID,
+        secretKey:process.env.AWS_ACCESS_KEY_SECRET,
+        bucketName:process.env.AWS_BUCKET_NAME,
+        region:process.env.AWS_REGION
     }
 })

@@ -11,6 +11,7 @@ import { config } from './modules/config/config';
 import { TypeOrmModule,TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { dataSourceOptions } from '../typeorm.config';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -18,7 +19,8 @@ import { dataSourceOptions } from '../typeorm.config';
     load:[config]
   }),
   TypeOrmModule.forRoot(dataSourceOptions),
-  AuthenticationModule
+  AuthenticationModule,
+  UsersModule
 ],
   controllers: [AppController],
   providers: [
