@@ -57,7 +57,7 @@ export class AuthenticationService {
     })
 
     if(existingUser){
-      throw new HttpException('not allowed',HttpStatus.NOT_ACCEPTABLE);
+      throw new HttpException('user already exist',HttpStatus.NOT_ACCEPTABLE);
     }
 
     const user = await this.userRepository.save(createUserDto);

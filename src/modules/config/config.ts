@@ -24,5 +24,8 @@ export const config = () => ({
         secretKey:process.env.AWS_ACCESS_KEY_SECRET,
         bucketName:process.env.AWS_BUCKET_NAME,
         region:process.env.AWS_REGION
+    },
+    url:{
+        coinApi:process.env.COIN_API_BASE_URL
     }
 })

@@ -12,6 +12,8 @@ import { TypeOrmModule,TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { dataSourceOptions } from '../typeorm.config';
 import { UsersModule } from './modules/users/users.module';
+import { CoinsModule } from './modules/coins/coins.module';
+import { UserCoinsModule } from './modules/userCoins/userCoins.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -20,7 +22,9 @@ import { UsersModule } from './modules/users/users.module';
   }),
   TypeOrmModule.forRoot(dataSourceOptions),
   AuthenticationModule,
-  UsersModule
+  UsersModule,
+  CoinsModule,
+  UserCoinsModule
 ],
   controllers: [AppController],
   providers: [

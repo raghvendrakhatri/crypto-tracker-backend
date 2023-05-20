@@ -8,6 +8,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
 import * as AWS from "aws-sdk";
+import fs from 'fs';
+import axios  from 'axios';
+import * as FormData from 'form-data' 
+import { Readable} from 'stream'
+
 
 
 @Injectable()
@@ -21,8 +26,6 @@ export class UsersService {
     @InjectRepository(User) 
     private readonly userRepository: Repository<User>,
     private readonly configService:ConfigService
-
-    
   ){
     this.awsBucketName = this.configService.get<string>('aws.bucketName');
     this.awsAccessKeyId = this.configService.get<string>('aws.accessKeyId');
@@ -65,8 +68,11 @@ export class UsersService {
     if(file){
       const buffer = file.buffer;
       const fileName = this.generateRandomFileName();
-      location = await this.uploadFile(buffer,fileName);
-      console.log(location);
+      // location = await this.uploadFile(buffer,fileName);
+      console.log('cwcbicvcihvck');
+      const uploadedFile = await this.cartoonifyImage(file);
+
+      // console.log(uploadedFile);
     }
 
     const userData = {
@@ -96,4 +102,42 @@ export class UsersService {
 
     const fileLocation = uploadResult.Location;
     return fileLocation;
-}}
+}
+
+
+
+async cartoonifyImage(file:any){
+  let data = new FormData();
+  data.append('image', file.buffer,'yuvi.jpeg');
+  console.log(file)
+  data.append('type', 'amcartoon');
+  
+console.log(file)
+
+console.log('dbebwiievivihe');
+
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: 'https://cartoon-yourself.p.rapidapi.com/facebody/api/portrait-animation/portrait-animation',
+  headers: { 
+    'X-RapidAPI-Host': 'cartoon-yourself.p.rapidapi.com', 
+    'X-RapidAPI-Key': 'f1f3a7b285mshb43ba9ebd06f2cep16de90jsn04e7b5f38347', 
+    ...data.getHeaders()
+  },
+  data : data
+};
+
+console.log(config);
+
+try {
+const response = await axios.request(config);
+console.log(response.data);
+} catch (error) {
+console.error(error);
+}
+ }
+
+
+
+}

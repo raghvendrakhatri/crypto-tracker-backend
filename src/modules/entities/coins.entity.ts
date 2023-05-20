@@ -1,9 +1,10 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
 import { UserCoinMapping } from './userCoinMapping.entity';
+import { CoinAlerts } from './coinAlerts.entity';
 
-@Entity('users')
-@Unique(['email'])
-export class User {
+@Entity('coins')
+@Unique(['coinSymbol'])
+export class Coins {
   @PrimaryGeneratedColumn({
     type:'bigint',
     name: 'id',
@@ -13,34 +14,30 @@ export class User {
   @Column({
     nullable: false,
     default: '',
-    name:'first_name'
+    name:'coin_name'
   })
-  firstName: string;
+  coinName: string;
 
   @Column({
     nullable: false,
-    default: '',
-    name:'last_name'
+    name:'coin_id'
   })
-  lastName: string;
+  coinId: string;
 
   @Column({
-    name: 'email',
+    name: 'coin_symbol',
     nullable: false,
     default: '',
   })
-  email: string;
+  coinSymbol: string;
 
   @Column({
     nullable: true,
+    type:'float',
+    name:'coin_price'
   })
-  password: string;
+  coinPrice: number;
 
-  @Column({
-    nullable: true,
-    name:'profile_picture'
-  })
-  profile: string;
 
  @CreateDateColumn({
     type: 'timestamp with time zone',
@@ -66,6 +63,9 @@ export class User {
  deletedAt: Date
 
 
- @OneToMany(() => UserCoinMapping, (userCoinMapping) => userCoinMapping.user)
+ @OneToMany(() => UserCoinMapping, (userCoinMapping) => userCoinMapping.coin)
  userCoinMapping: UserCoinMapping[];
+
+ @OneToMany(() => CoinAlerts, (coinAlerts) => coinAlerts.coin)
+ coinAlerts: CoinAlerts[];
 }
